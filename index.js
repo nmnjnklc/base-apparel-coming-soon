@@ -6,18 +6,14 @@ const errorIcon = document.querySelector('.error-icon');
 
 var email = '';
 
+var validRegex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+
 input.addEventListener('change', (e) => {
     email = e.target.value;
 });
 
 submit.addEventListener('click', () => {
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-        input.classList.add('valid-email');
-        setTimeout(() => {
-            input.classList.remove('valid-email');
-            form.reset();
-        }, 2000)
-    } else {
+    if (!validRegex.test(email)) {
         input.classList.add('invalid-email');
         errorMsg.classList.remove('hide');
         errorIcon.classList.remove('hide');
@@ -25,6 +21,13 @@ submit.addEventListener('click', () => {
             input.classList.remove('invalid-email');
             errorMsg.classList.add('hide');
             errorIcon.classList.add('hide');
+            email = '';
+            form.reset();
+        }, 2000)
+} else {
+        input.classList.add('valid-email');
+        setTimeout(() => {
+            input.classList.remove('valid-email');
             form.reset();
         }, 2000)
     }
